@@ -30,6 +30,8 @@ if ingredients_list:
         ingredients_string += fruit_chosen + ' '
         # API call
         st.subheader(fruit_chosen + ' Nutrition Information')
+        search_stmt = f"""select search_on from smoothies.public.fruit_options where fruit_name = {fruit_chosen}"""
+        search_on = session.sql(search_stmt).collect()
         smoothiefroot_response = requests.get(f"https://my.smoothiefroot.com/api/fruit/{fruit_chosen}")
         sf_df = st.dataframe(data=smoothiefroot_response.json(), use_container_width=True)
     #st.write(ingredients_string)
